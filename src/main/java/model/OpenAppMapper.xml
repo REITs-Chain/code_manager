@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ww.dao.OpenAppMapper">
+  <resultMap id="OpenAppMap" type="model.OpenApp">
+    <id property="id" column="id"/>
+    <result property="openUserId" column="openUserId"/>
+    <result property="appName" column="appName"/>
+    <result property="appId" column="appId"/>
+    <result property="secure" column="secure"/>
+    <result property="icon" column="icon"/>
+    <association property="openUser" column="openUserId" javaType="model.OpenUser" select="ww.dao.OpenUserMapper.getById"/>
+  </resultMap>
+  <select id="getById" parameterType="java.lang.Integer" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where m.id=#{value}</select>
+  <select id="getByOpenUserId" parameterType="java.lang.Integer" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where m.openUserId=#{value}</select>
+  <select id="getByAppName" parameterType="java.lang.String" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where m.appName=#{value}</select>
+  <select id="getByAppId" parameterType="java.lang.String" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where m.appId=#{value}</select>
+  <select id="getBySecure" parameterType="java.lang.String" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where m.secure=#{value}</select>
+  <select id="getByIcon" parameterType="java.lang.String" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where m.icon=#{value}</select>
+  <select id="getAll" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m</select>
+  <select id="getList" parameterType="String" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m ${value}</select>
+  <select id="getList2" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where ${param1} order by ${param2} limit ${param3},${param4}</select>
+  <select id="getList3" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m where ${param1} limit ${param2},${param3}</select>
+  <select id="getList4" resultType="model.OpenApp" resultMap="OpenAppMap">select m.* from t_open_app m order by ${param1} limit ${param2},${param3}</select>
+  <select id="selectSql" parameterType="String" resultType="ww.common.SqlMap">${value}</select>
+  <select id="getCount" parameterType="String" resultType="int">select count(*) from t_open_app m ${value}</select>
+  <insert id="insert" parameterType="model.OpenApp" keyProperty="id" useGeneratedKeys="true">insert into t_open_app(openUserId,appName,appId,secure,icon) values(#{openUserId},#{appName},#{appId},#{secure},#{icon})</insert>
+  <update id="update" parameterType="model.OpenApp" keyProperty="id" useGeneratedKeys="true">update t_open_app set openUserId=#{openUserId},appName=#{appName},appId=#{appId},secure=#{secure},icon=#{icon} where id=#{id}</update>
+  <delete id="delete" parameterType="java.lang.Integer">delete from t_open_app where id=#{value}</delete>
+  <delete id="deleteWhere" parameterType="String">delete from t_open_app ${value}</delete>
+</mapper>

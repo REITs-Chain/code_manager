@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ww.dao.OpenUserMapper">
+  <resultMap id="OpenUserMap" type="model.OpenUser">
+    <id property="id" column="id"/>
+    <result property="phoneNum" column="phoneNum"/>
+    <result property="password" column="password"/>
+    <result property="type" column="type"/>
+    <result property="realName" column="realName"/>
+    <result property="idNum" column="idNum"/>
+    <result property="photo1" column="photo1"/>
+    <result property="photo2" column="photo2"/>
+    <result property="linkMan" column="linkMan"/>
+    <result property="linkPhone" column="linkPhone"/>
+    <result property="status" column="status"/>
+    <collection property="openApps" column="id" ofType="model.OpenApp" select="ww.dao.OpenAppMapper.getByOpenUserId"/>
+  </resultMap>
+  <select id="getById" parameterType="java.lang.Integer" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.id=#{value}</select>
+  <select id="getByPhoneNum" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.phoneNum=#{value}</select>
+  <select id="getByPassword" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.password=#{value}</select>
+  <select id="getByType" parameterType="java.lang.Integer" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.type=#{value}</select>
+  <select id="getByRealName" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.realName=#{value}</select>
+  <select id="getByIdNum" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.idNum=#{value}</select>
+  <select id="getByPhoto1" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.photo1=#{value}</select>
+  <select id="getByPhoto2" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.photo2=#{value}</select>
+  <select id="getByLinkMan" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.linkMan=#{value}</select>
+  <select id="getByLinkPhone" parameterType="java.lang.String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.linkPhone=#{value}</select>
+  <select id="getByStatus" parameterType="java.lang.Integer" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where m.status=#{value}</select>
+  <select id="getAll" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m</select>
+  <select id="getList" parameterType="String" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m ${value}</select>
+  <select id="getList2" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where ${param1} order by ${param2} limit ${param3},${param4}</select>
+  <select id="getList3" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m where ${param1} limit ${param2},${param3}</select>
+  <select id="getList4" resultType="model.OpenUser" resultMap="OpenUserMap">select m.* from t_open_user m order by ${param1} limit ${param2},${param3}</select>
+  <select id="selectSql" parameterType="String" resultType="ww.common.SqlMap">${value}</select>
+  <select id="getCount" parameterType="String" resultType="int">select count(*) from t_open_user m ${value}</select>
+  <insert id="insert" parameterType="model.OpenUser" keyProperty="id" useGeneratedKeys="true">insert into t_open_user(phoneNum,password,type,realName,idNum,photo1,photo2,linkMan,linkPhone,status) values(#{phoneNum},#{password},#{type},#{realName},#{idNum},#{photo1},#{photo2},#{linkMan},#{linkPhone},#{status})</insert>
+  <update id="update" parameterType="model.OpenUser" keyProperty="id" useGeneratedKeys="true">update t_open_user set phoneNum=#{phoneNum},password=#{password},type=#{type},realName=#{realName},idNum=#{idNum},photo1=#{photo1},photo2=#{photo2},linkMan=#{linkMan},linkPhone=#{linkPhone},status=#{status} where id=#{id}</update>
+  <delete id="delete" parameterType="java.lang.Integer">delete from t_open_user where id=#{value}</delete>
+  <delete id="deleteWhere" parameterType="String">delete from t_open_user ${value}</delete>
+</mapper>
